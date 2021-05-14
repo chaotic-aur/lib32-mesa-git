@@ -7,7 +7,7 @@ pkgbase=lib32-mesa-git
 pkgname=('lib32-vulkan-mesa-layers-git' 'lib32-vulkan-intel-git' 'lib32-vulkan-radeon-git' 'lib32-mesa-git')
 pkgdesc="mesa trunk (32-bit) (git version)"
 epoch=1
-pkgver=21.1.0_devel.137762.b4a66b29cd6
+pkgver=21.2.0_devel.138694.ad853fc0e1a
 pkgrel=1
 groups=('chaotic-mesa-git')
 arch=('x86_64')
@@ -26,8 +26,7 @@ source=('mesa::git+https://gitlab.freedesktop.org/mesa/mesa.git'
         'LICENSE')
 sha256sums=('SKIP'
             '3ea259740141b862e152e07c58f05cad539680541dc181a7233be0c93414e6fb'
-            '7052ba73bb07ea78873a2431ee4e828f4e72bda7d176d07f770fa48373dec537'
-            '326103287b47fc9a65fd3f90aa95b6444cfa2a6c190f1da1114ea4ea05a7a540')
+            '331493ff8cc3de7a63530ff9ae4f9b1b444175d96e91ebcde4644bb3709f12ad')
 
 pkgver() {
   cd ${srcdir}/mesa
