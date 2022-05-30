@@ -7,7 +7,7 @@ pkgbase=lib32-mesa-git
 pkgname=('lib32-vulkan-mesa-layers-git' 'lib32-vulkan-intel-git' 'lib32-vulkan-radeon-git' 'lib32-mesa-git')
 pkgdesc="mesa trunk (32-bit) (git version)"
 epoch=1
-pkgver=21.2.0_devel.138694.ad853fc0e1a
+pkgver=22.2.0_devel.154536.f2e36463
 pkgrel=1
 groups=('chaotic-mesa-git')
 arch=('x86_64')
@@ -26,7 +26,7 @@ source=('mesa::git+https://gitlab.freedesktop.org/mesa/mesa.git'
         'LICENSE')
 sha256sums=('SKIP'
             '3ea259740141b862e152e07c58f05cad539680541dc181a7233be0c93414e6fb'
-            '331493ff8cc3de7a63530ff9ae4f9b1b444175d96e91ebcde4644bb3709f12ad')
+            '7052ba73bb07ea78873a2431ee4e828f4e72bda7d176d07f770fa48373dec537')
 
 pkgver() {
   cd ${srcdir}/mesa
@@ -35,51 +35,44 @@ pkgver() {
   echo ${_ver/-/_}.$(git rev-list --count HEAD).$(git rev-parse --short HEAD)
 }
 
-prepare() {
-  cd ${srcdir}/mesa
-
-  #patch -Np1 -i ../mesa.patch
-}
-
 build() {
   export CC="gcc -m32"
   export CXX="g++ -m32"
   export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-  
+
   arch-meson mesa build \
     --native-file llvm32.native \
     --libdir=/usr/lib32 \
     -D b_lto=true \
     -D b_ndebug=true \
     -D platforms=x11,wayland \
-    -D dri-drivers=i915,i965,r100,r200,nouveau \
-    -D gallium-drivers=r300,r600,radeonsi,nouveau,iris,zink,virgl,svga,swrast \
+    -D gallium-drivers=r300,r600,radeonsi,nouveau,iris,zink,virgl,svga,swrast,i915,crocus,asahi,panfrost,kmsro \
     -D vulkan-drivers=amd,intel \
     -D vulkan-layers=device-select,intel-nullhw,overlay \
-    -D swr-arches=avx,avx2 \
-    -D dri3=true \
-    -D egl=true \
-    -D gallium-extra-hud=true \
-    -D gallium-nine=true \
+    -D dri3=enabled \
+    -D egl=enabled \
+    -D gallium-extra-hud=enabled \
+    -D gallium-nine=enabled \
     -D gallium-omx=disabled \
     -D gallium-opencl=disabled \
-    -D gallium-va=true \
-    -D gallium-vdpau=true \
-    -D gallium-xa=true \
-    -D gallium-xvmc=false \
-    -D gbm=true \
-    -D gles1=false \
-    -D gles2=true \
-    -D glvnd=true \
+    -D gallium-va=enabled \
+    -D gallium-vdpau=enabled \
+    -D gallium-xa=enabled \
+    -D gallium-xvmc=disabled \
+    -D gbm=enabled \
+    -D gles1=disabled \
+    -D gles2=enabled \
+    -D glvnd=enabled \
     -D glx=dri \
-    -D libunwind=false \
-    -D llvm=true \
-    -D lmsensors=true \
-    -D osmesa=true \
-    -D shared-glapi=true \
+    -D libunwind=disabled \
+    -D llvm=enabled \
+    -D lmsensors=enabled \
+    -D osmesa=enabled \
+    -D shared-glapi=enabled \
     -D microsoft-clc=disabled \
-    -D valgrind=true
-
+    -D valgrind=enabled \
+    -D zstd=auto
+    
   # Print config
   meson configure build
 
