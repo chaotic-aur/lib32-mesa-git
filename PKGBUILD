@@ -72,7 +72,7 @@ build() {
     -D microsoft-clc=disabled \
     -D valgrind=enabled \
     -D zstd=auto
-    
+
   # Print config
   meson configure build
 
