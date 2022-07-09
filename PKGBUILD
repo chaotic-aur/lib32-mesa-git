@@ -98,10 +98,10 @@ package_lib32-vulkan-mesa-layers-git() {
   depends=('vulkan-mesa-layers-git')
   conflicts=('lib32-vulkan-mesa-layer-git')
   replaces=('lib32-vulkan-mesa-layer-git')
-  
+
   rm -rv fakeinstall/usr/share/vulkan/explicit_layer.d
   rm -rv fakeinstall/usr/share/vulkan/implicit_layer.d
-  
+
   _install fakeinstall/usr/lib32/libVkLayer_*.so
 
   rm -rv fakeinstall/usr/bin/mesa-overlay-control.py
@@ -116,7 +116,7 @@ package_lib32-vulkan-intel-git() {
   optdepends=('lib32-vulkan-mesa-layer-git: a vulkan layer to display information using an overlay')
   provides=('lib32-vulkan-intel' 'lib32-vulkan-driver')
   conflicts=('lib32-vulkan-intel')
-  
+
   _install fakeinstall/usr/share/vulkan/icd.d/intel_icd*.json
   _install fakeinstall/usr/lib32/libvulkan_intel.so
 
@@ -152,7 +152,7 @@ package_lib32-mesa-git() {
 
   # ati-dri, nouveau-dri, intel-dri, svga-dri, swrast
   _install fakeinstall/usr/lib32/dri/*_dri.so
-   
+
   _install fakeinstall/usr/lib32/d3d
   _install fakeinstall/usr/lib32/lib{gbm,glapi}.so*
   _install fakeinstall/usr/lib32/libOSMesa.so*
@@ -165,7 +165,7 @@ package_lib32-mesa-git() {
 
   # indirect rendering
   ln -s /usr/lib32/libGLX_mesa.so.0 "${pkgdir}/usr/lib32/libGLX_indirect.so.0"
-  
+
   rm -rv fakeinstall/usr/share/drirc.d
   rm -rv fakeinstall/usr/include
   rm -rv fakeinstall/usr/share
