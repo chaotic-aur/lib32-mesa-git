@@ -12,11 +12,11 @@ pkgrel=1
 groups=('chaotic-mesa-git')
 arch=('x86_64')
 
-LLVM32_VERSION=$(pacman -Si lib32-llvm-libs-git | grep -Po '^Version +: ([^-]+)' | awk '{print $3}')
+LLVM32_VERSION=$(pacman -Si lib32-llvm-libs | grep -Po '^Version +: ([^-]+)' | awk '{print $3}')
 
 makedepends=('python-mako' 'lib32-libxml2' 'lib32-expat' 'lib32-libx11' 'lib32-libdrm' 'xorgproto'
-             'lib32-libxrandr' 'lib32-libxshmfence' 'lib32-libxxf86vm' 'lib32-libxdamage' 'gcc-multilib' 'lib32-libelf' 'lib32-llvm-git'
-             'lib32-systemd' 'lib32-libvdpau' 'lib32-libva' 'lib32-wayland' 'wayland-protocols' 'lib32-libglvnd' 'lib32-lm_sensors' 'lib32-clang-git'
+             'lib32-libxrandr' 'lib32-libxshmfence' 'lib32-libxxf86vm' 'lib32-libxdamage' 'gcc-multilib' 'lib32-libelf' 'lib32-llvm'
+             'lib32-systemd' 'lib32-libvdpau' 'lib32-libva' 'lib32-wayland' 'wayland-protocols' 'lib32-libglvnd' 'lib32-lm_sensors' 'lib32-clang'
              'meson' 'glslang' 'valgrind' 'lib32-vulkan-icd-loader' 'lib32-libelf'
              'lib32-zstd' 'git')
 url="http://mesa3d.sourceforge.net"
@@ -126,7 +126,7 @@ package_lib32-vulkan-intel-git() {
 package_lib32-vulkan-radeon-git() {
   pkgdesc="Radeon's Vulkan mesa driver (32-bit) (git version)"
   depends=('vulkan-radeon-git' 'lib32-libgcrypt' 'lib32-wayland' 'lib32-libx11'
-           'lib32-llvm-libs-git' 'lib32-libdrm' 'lib32-libelf' 'lib32-libxshmfence')
+           'lib32-llvm-libs' 'lib32-libdrm' 'lib32-libelf' 'lib32-libxshmfence')
   optdepends=('lib32-vulkan-mesa-layer-git: a vulkan layer to display information using an overlay')
   provides=('lib32-vulkan-radeon' 'lib32-vulkan-driver')
   conflicts=('lib32-vulkan-radeon')
@@ -139,7 +139,7 @@ package_lib32-vulkan-radeon-git() {
 
 package_lib32-mesa-git() {
   pkgdesc="an open-source implementation of the OpenGL specification (32-bit) (git version)"
-  depends=('lib32-libdrm' 'lib32-libxxf86vm' 'lib32-libxdamage' 'lib32-systemd' 'lib32-libelf' 'lib32-libxshmfence' 'lib32-llvm-libs-git'
+  depends=('lib32-libdrm' 'lib32-libxxf86vm' 'lib32-libxdamage' 'lib32-systemd' 'lib32-libelf' 'lib32-libxshmfence' 'lib32-llvm-libs'
            'lib32-wayland' 'lib32-lm_sensors' 'lib32-libglvnd' 'mesa-git')
   optdepends=('opengl-man-pages: for the OpenGL API man pages')
   provides=('lib32-mesa' 'lib32-libva-mesa-driver' 'lib32-mesa-vdpau' 'lib32-mesa-libgl' 'lib32-opengl-driver')
