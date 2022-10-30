@@ -7,7 +7,7 @@ pkgbase=lib32-mesa-git
 pkgname=('lib32-vulkan-mesa-layers-git' 'lib32-vulkan-intel-git' 'lib32-vulkan-radeon-git' 'lib32-mesa-git')
 pkgdesc="mesa trunk (32-bit) (git version)"
 epoch=1
-pkgver=22.2.0_devel.154536.f2e36463
+pkgver=22.3.0_devel.162086.3f282b54fa3
 pkgrel=1
 groups=('chaotic-mesa-git')
 arch=('x86_64')
@@ -15,8 +15,10 @@ arch=('x86_64')
 LLVM32_VERSION=$(pacman -Si lib32-llvm-libs | grep -Po '^Version +: ([^-]+)' | awk '{print $3}')
 
 makedepends=('python-mako' 'lib32-libxml2' 'lib32-expat' 'lib32-libx11' 'lib32-libdrm' 'xorgproto'
-             'lib32-libxrandr' 'lib32-libxshmfence' 'lib32-libxxf86vm' 'lib32-libxdamage' 'gcc-multilib' 'lib32-libelf' 'lib32-llvm'
-             'lib32-systemd' 'lib32-libvdpau' 'lib32-libva' 'lib32-wayland' 'wayland-protocols' 'lib32-libglvnd' 'lib32-lm_sensors' 'lib32-clang'
+             'lib32-libxrandr' 'lib32-libxshmfence' 'lib32-libxxf86vm' 'lib32-libxdamage' 'gcc-multilib' 
+             'lib32-libelf' 'lib32-llvm-git'
+             'lib32-systemd' 'lib32-libvdpau' 'lib32-libva' 'lib32-wayland' 'wayland-protocols' 'lib32-libglvnd' 
+             'lib32-lm_sensors' 'lib32-clang-git'
              'meson' 'glslang' 'valgrind' 'lib32-vulkan-icd-loader' 'lib32-libelf'
              'lib32-zstd' 'git')
 url="http://mesa3d.sourceforge.net"
@@ -26,7 +28,7 @@ source=('mesa::git+https://gitlab.freedesktop.org/mesa/mesa.git'
         'LICENSE')
 sha256sums=('SKIP'
             '3ea259740141b862e152e07c58f05cad539680541dc181a7233be0c93414e6fb'
-            '7052ba73bb07ea78873a2431ee4e828f4e72bda7d176d07f770fa48373dec537')
+            '7fdc119cf53c8ca65396ea73f6d10af641ba41ea1dd2bd44a824726e01c8b3f2')
 
 pkgver() {
   cd ${srcdir}/mesa
@@ -46,32 +48,31 @@ build() {
     -D b_lto=true \
     -D b_ndebug=true \
     -D platforms=x11,wayland \
-    -D gallium-drivers=r300,r600,radeonsi,nouveau,iris,zink,virgl,svga,swrast,i915,crocus,asahi,panfrost,kmsro \
-    -D vulkan-drivers=amd,intel \
+    -D gallium-drivers=r300,r600,radeonsi,nouveau,iris,zink,virgl,svga,swrast,i915,crocus,asahi,panfrost,kmsro,lima \
+    -D vulkan-drivers=amd,intel,intel_hasvk \
     -D vulkan-layers=device-select,intel-nullhw,overlay \
-    -D dri3=enabled \
-    -D egl=enabled \
-    -D gallium-extra-hud=enabled \
-    -D gallium-nine=enabled \
+    -D dri3=true \
+    -D gallium-extra-hud=true \
+    -D gallium-nine=true \
     -D gallium-omx=disabled \
     -D gallium-opencl=disabled \
     -D gallium-va=enabled \
     -D gallium-vdpau=enabled \
-    -D gallium-xa=enabled \
-    -D gallium-xvmc=disabled \
+    -D gallium-xa=true \
     -D gbm=enabled \
     -D gles1=disabled \
     -D gles2=enabled \
-    -D glvnd=enabled \
+    -D glvnd=true \
     -D glx=dri \
     -D libunwind=disabled \
     -D llvm=enabled \
     -D lmsensors=enabled \
-    -D osmesa=enabled \
+    -D osmesa=true \
     -D shared-glapi=enabled \
     -D microsoft-clc=disabled \
     -D valgrind=enabled \
-    -D zstd=auto
+    -D zstd=true \
+    -D video-codecs=vc1dec,h264dec,h264enc,h265dec,h265enc
 
   # Print config
   meson configure build
@@ -119,6 +120,7 @@ package_lib32-vulkan-intel-git() {
 
   _install fakeinstall/usr/share/vulkan/icd.d/intel_icd*.json
   _install fakeinstall/usr/lib32/libvulkan_intel.so
+  _install fakeinstall/usr/lib32/libvulkan_intel_hasvk.so
 
   install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" LICENSE
 }
@@ -126,11 +128,11 @@ package_lib32-vulkan-intel-git() {
 package_lib32-vulkan-radeon-git() {
   pkgdesc="Radeon's Vulkan mesa driver (32-bit) (git version)"
   depends=('vulkan-radeon-git' 'lib32-libgcrypt' 'lib32-wayland' 'lib32-libx11'
-           'lib32-llvm-libs' 'lib32-libdrm' 'lib32-libelf' 'lib32-libxshmfence')
+           'lib32-llvm-libs-git' 'lib32-libdrm' 'lib32-libelf' 'lib32-libxshmfence')
   optdepends=('lib32-vulkan-mesa-layer-git: a vulkan layer to display information using an overlay')
   provides=('lib32-vulkan-radeon' 'lib32-vulkan-driver')
   conflicts=('lib32-vulkan-radeon')
-  
+
   _install fakeinstall/usr/share/vulkan/icd.d/radeon_icd*.json
   _install fakeinstall/usr/lib32/libvulkan_radeon.so
 
@@ -139,7 +141,7 @@ package_lib32-vulkan-radeon-git() {
 
 package_lib32-mesa-git() {
   pkgdesc="an open-source implementation of the OpenGL specification (32-bit) (git version)"
-  depends=('lib32-libdrm' 'lib32-libxxf86vm' 'lib32-libxdamage' 'lib32-systemd' 'lib32-libelf' 'lib32-libxshmfence' 'lib32-llvm-libs'
+  depends=('lib32-libdrm' 'lib32-libxxf86vm' 'lib32-libxdamage' 'lib32-systemd' 'lib32-libelf' 'lib32-libxshmfence' 'lib32-llvm-libs-git'
            'lib32-wayland' 'lib32-lm_sensors' 'lib32-libglvnd' 'mesa-git')
   optdepends=('opengl-man-pages: for the OpenGL API man pages')
   provides=('lib32-mesa' 'lib32-libva-mesa-driver' 'lib32-mesa-vdpau' 'lib32-mesa-libgl' 'lib32-opengl-driver')
