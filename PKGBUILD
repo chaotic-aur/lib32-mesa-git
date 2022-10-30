@@ -7,7 +7,7 @@ pkgbase=lib32-mesa-git
 pkgname=('lib32-vulkan-mesa-layers-git' 'lib32-vulkan-intel-git' 'lib32-vulkan-radeon-git' 'lib32-mesa-git')
 pkgdesc="mesa trunk (32-bit) (git version)"
 epoch=1
-pkgver=22.3.0_devel.162086.3f282b54fa3
+pkgver=22.2.0_devel.154536.f2e36463
 pkgrel=1
 groups=('chaotic-mesa-git')
 arch=('x86_64')
@@ -15,9 +15,9 @@ arch=('x86_64')
 LLVM32_VERSION=$(pacman -Si lib32-llvm-libs | grep -Po '^Version +: ([^-]+)' | awk '{print $3}')
 
 makedepends=('python-mako' 'lib32-libxml2' 'lib32-expat' 'lib32-libx11' 'lib32-libdrm' 'xorgproto'
-             'lib32-libxrandr' 'lib32-libxshmfence' 'lib32-libxxf86vm' 'lib32-libxdamage' 'gcc-multilib' 
+             'lib32-libxrandr' 'lib32-libxshmfence' 'lib32-libxxf86vm' 'lib32-libxdamage' 'gcc-multilib'
              'lib32-libelf' 'lib32-llvm-git'
-             'lib32-systemd' 'lib32-libvdpau' 'lib32-libva' 'lib32-wayland' 'wayland-protocols' 'lib32-libglvnd' 
+             'lib32-systemd' 'lib32-libvdpau' 'lib32-libva' 'lib32-wayland' 'wayland-protocols' 'lib32-libglvnd'
              'lib32-lm_sensors' 'lib32-clang-git'
              'meson' 'glslang' 'valgrind' 'lib32-vulkan-icd-loader' 'lib32-libelf'
              'lib32-zstd' 'git')
