@@ -7,7 +7,7 @@ pkgbase=lib32-mesa-git
 pkgname=('lib32-vulkan-mesa-layers-git' 'lib32-vulkan-intel-git' 'lib32-vulkan-radeon-git' 'lib32-mesa-git')
 pkgdesc="mesa trunk (32-bit) (git version)"
 epoch=1
-pkgver=22.2.0_devel.154536.f2e36463
+pkgver=23.3.0_devel.177608.cb1c88d41f6
 pkgrel=1
 groups=('chaotic-mesa-git')
 arch=('x86_64')
@@ -45,13 +45,15 @@ build() {
   arch-meson mesa build \
     --native-file llvm32.native \
     --libdir=/usr/lib32 \
-    -D b_lto=true \
+    -D b_lto=false \
+    -D cpp_std=c++17 \
     -D b_ndebug=true \
     -D platforms=x11,wayland \
     -D gallium-drivers=r300,r600,radeonsi,nouveau,iris,zink,virgl,svga,swrast,i915,crocus,asahi,panfrost,kmsro,lima \
     -D vulkan-drivers=amd,intel,intel_hasvk \
     -D vulkan-layers=device-select,intel-nullhw,overlay \
     -D dri3=true \
+    -D egl=enabled \
     -D gallium-extra-hud=true \
     -D gallium-nine=true \
     -D gallium-omx=disabled \
@@ -72,6 +74,7 @@ build() {
     -D microsoft-clc=disabled \
     -D valgrind=enabled \
     -D zstd=true \
+    -D android-libbacktrace=disabled \
     -D video-codecs=vc1dec,h264dec,h264enc,h265dec,h265enc
 
   # Print config
